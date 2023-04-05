@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--    <script src="/scripts/send_form.js"></script>-->
+  <script>
+        class FormSubmit {
+            constructor(formId, url, btnId) {
+                this.form = document.getElementById(formId);
+                this.url = url;
+                this.btn = document.getElementById(btnId);
+                this.btn.addEventListener("click", (event) => {
+                    event.preventDefault(); // Отменяем стандартное поведение кнопки
+                    this.submit(); // Вызываем метод submit() для формы
+                });
+                //добавить кнопку и отображение ошибки
+            }
+
+            async submit() {
+                const formData = new FormData(this.form);
+                console.log(formData)
+                const signal =this.cancel();
+                try {
+                    const response = await fetch(this.url, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+
+                    const result = await response.json();
+                    console.log(result); // Вывод результата в консоль
+
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            cancel() {
+                const controller = new AbortController();
+                const signal = controller.signal;
+
+                setTimeout(() => {
+                    controller.abort();
+                    console.log('Отправка формы была отменена');
+                }, 5000);
+
+                return signal;
+            }
+        }
+    </script>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<header id="my_header">
+    <h1 id="element_id" class="container" style="display: flex; flex-direction: row">
+        <img src="images/logo.png" class="imag">
+        Задание по спортмастеру
+    </h1>
+</header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 col-8 ">
+
+            <nav class="content" style="text-align: center" >
+                <a href="#link_list" class="menu">Список ссылок</a> |
+                <a href="#my_table" class="menu">Таблица</a>|
+                <a href="#my_form" class="menu">Форма для заполнения</a>|
+                <a href="#my_footer" class="menu">Footer</a>
+            </nav>
+
+            <a id="link_list">
+                <h1 class="content">Список ссылок</h1>
+                <ol class="content">
+                    <li><a href="https://www.google.com/" id="#flag">Простая ссылка</a></li>
+                    <li><a href="Untitled.pdf" download>Скачать файл</a></li>
+                    <li><a href="mailto:example@example.com">Написать письмо</a></li>
+                    <li>
+                        <a href="https://ru.wikipedia.org/wiki/Википедия:Внутренние_ссылки#На_что_следует_ссылаться">
+                            Ссылка на фрагмент страницы некоторого сайта
+                        </a>
+                    </li>
+                    <li><a href="#element_id">Cсылка на фрагмент текущей страницы</a></li>
+                    <li><a href="#element_id" title="О чём">Оглавление</a></li>
+                    <li><a>Ссылка без href</a></li>
+                    <li><a href="">Ссылка с пустым href</a></li>
+                    <li>
+                        <p> <a href="https://www.google.com/">Ссылка</a> в тексте
+                        </p>
+                    </li>
+                    <li>
+                        <a href="https://ru.wikipedia.org/wiki/Капибара">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Carpincho_en_el_Parque_Nacional_El_Palmar.jpg/275px-Carpincho_en_el_Parque_Nacional_El_Palmar.jpg" width="300" height="200" style="object-fit: cover" alt="">
+                        </a>
+                    </li>
+                </ol>
+            </a>
+            <br>
+            <a id="my_table">
+                <h1 class="content">Таблица</h1>
+                <div id="table_1">
+                    Размер заработной платы учителя по регионам России, <b>тыс. руб</b>
+                    <table class="table table-striped table-bordered" >
+                        <thead>
+                        <tr>
+                            <th scope="row" class="col-4" rowspan="2">Регион</th>
+                            <td class="col-4" colspan="2">Средняя зарплата</td>
+                        </tr>
+                        <td colspan="1">По экономике региона в целом</td>
+                        <td colspan="1">Учителей, сентябрь, 2015</td>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">Волгоградская область</th>
+                            <td>19,0</td>
+                            <td>16,8</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Краснодарский край</th>
+                            <td>16,5</td>
+                            <td>18,3</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Москва</th>
+                            <td>39,0</td>
+                            <td>42,8</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Алтайский край</th>
+                            <td>12,3</td>
+                            <td>14,0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </a>
+            <br>
+
+            <a id="my_form">
+                <h1 class="content">Форма</h1>
+
+                <form id="foorm"  class="content">
+                    <div class="form-group container">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-4">
+                                    <label><b>E-mail:</b></label>
+                                </div>
+
+                                <div class="col-6">
+                                    <input class="form-control" name="my_email" value="Введите вашу почту:" type="email" placeholder="Email">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-4">
+                                    <label><b>Введите Ваше имя:</b></label>
+                                </div>
+
+                                <div class="col-7">
+                                    <input type="text" class="form-control" name="my_name" placeholder="Имя">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="man_woman"  value="1" checked>
+                                        <label class="form-check-label">Мужчина</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="man_woman" value="2">
+                                        <label class="form-check-label" >
+                                            Женщина
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <label>
+                                        <b>Дата рождения:</b>
+                                    </label>
+                                </div>
+                                <div class="col-8 form-group">
+                                    <input name="my_birthday" type="date">
+                                </div>
+                            </div>
+
+                            <br>
+                            <label><b>О себе:</b></label>
+                            <textarea class="form-control"  rows="3" name="my_bio">Хобби, интересы</textarea>
+
+                            <br>
+                            <div class="form-group col-7">
+                                <label for="ControlSelect1"> <b>Семейное положение</b></label>
+                                <select class="form-control" id="ControlSelect1" name="status">
+                                    <option value="">Выберите семейное положение</option>
+                                    <option value="single">Не женат/Не замужем</option>
+                                    <option value="married">Женат/Замужем</option>
+                                    <option value="divorced">Разведен(а)</option>
+                                    <option value="widowed">Вдовец/Вдова</option>
+                                </select>
+                            </div>
+
+                            <br>
+                            <div class="form-group col-5">
+                                <label for="ControlSelect2"><b>Страна:</b></label>
+                                <select multiple class="form-control" id="ControlSelect2" name="country">
+                                    <option value="1">Россия</option>
+                                    <option value="2">Украина</option>
+                                    <option value="3">Беларусь</option>
+                                    <option value="4">Казахстан</option>
+                                </select>
+                            </div>
+
+                            <br>
+                            <div class="form-check" >
+                                <input type="checkbox" name="confirm" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">  C правилами ознакомлен(а)</label>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Отправить" id="submitBtn">
+
+                    </div>
+
+
+
+
+                </form>
+                <script>
+
+                    const myForm = new FormSubmit('foorm', 'https://formcarry.com/s/ys-Bb_s5BD', 'submitBtn');
+
+                </script>
+            </a>
+        </div>
+    </div>
+
+
+</div>
+<a id="my_footer">
+<footer id="my_footer_">
+    <p>© Екатерина Анищенко</p>
+</footer>
+</a>
+</body>
+</html>
